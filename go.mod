@@ -1,4 +1,4 @@
-module lmdb-storage
+module github.com/dingyuqi/lmdb-storage
 
 go 1.19
 
