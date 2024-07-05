@@ -2,7 +2,7 @@ package lmdb
 
 import (
 	"github.com/bmatsuo/lmdb-go/lmdb"
-	"lmdb-storage/util"
+	"github.com/dingyuqi/lmdb-storage/util"
 	"log"
 	"sync"
 )

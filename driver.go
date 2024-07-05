@@ -1,7 +1,7 @@
 package lmdb
 
 import (
-	"lmdb-storage/util"
+	"github.com/dingyuqi/lmdb-storage/util"
 	"log"
 	"os"
 	"path"

@@ -1,7 +1,7 @@
 package test
 
 import (
-	lmdb "lmdb-storage"
+	"github.com/dingyuqi/lmdb-storage"
 	"os"
 	"strconv"
 	"testing"
