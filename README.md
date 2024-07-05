@@ -1,23 +1,27 @@
 # lmdb-storage
 
-lmdb-storage是一个用于保存键值对数据的Go语言库, 它是[lmdb](http://www.lmdb.tech/doc/starting.html)数据库的一个封装. 
-该库在[lmdb-go](https://github.com/bmatsuo/lmdb-go)的基础上进一步地增加了批量读写和自动分区的功能, 更适合应对大数据量的数据读写.
+**Read this in other languages: [简体中文](./README.zh-CN.md)**
 
-## 安装
-使用 `go get`安装lmdb-storage
 
+lmdb-storage is a Go language library used to save key-value data. It is a further packaging of the [lmdb](http://www.lmdb.tech/doc/starting.html) database.
+This library further adds the functions of batch reading and writing and automatic partitioning based on [lmdb-go](https://github.com/bmatsuo/lmdb-go), which is more suitable for dealing with large amounts of data reading and writing.
+
+## Installation
+Use the `go get` to install lmdb-storage.
 ```shell
 go get github.com/dingyuqi/lmdb-storage
 ```
+## Usage
+### New lmdb driver
 
-## 用法
-### 新建Driver对象
-调用`NewLmdbDriver()`可以获得一个Driver对象, 一共提供三个参数:
-1. `root`: lmdb数据库存储的根目录
-2. `mapSize`: 单个数据库DB的大小
-3. `blockSize`: 批量读写时一个批次的key-value的个数
+Call `NewLmdbDriver()` to get a Driver object, providing a total of three parameters:
+1. `root`: the root path to save data
+2. `mapSize`: size of one DB file
+3. `blockSize`: batch size of reading and writing
+
 > [!TIP]  
-> 如果不想设定mapSize和blockSize, 则可以调用`NewDefaultLmdbDriver()`, 该函数仅需要提供`root`路径参数, 默认mapSize为5MB, blockSize为10000.
+>If you do not want to set mapSize and blockSize, you can call `NewDefaultLmdbDriver()`. 
+This function only needs to provide the `root` path parameter. The default mapSize is 5MB and blockSize is 10000.
 
 ```go
 package main
@@ -42,47 +46,11 @@ func main() {
 		log.Fatalln(err)
 	}
 }
-
 ```
-### 批量写数据
-在新建lmdbDriver后即可对数据进行批量读写. 写数据的操作主要使用`Put()`函数. 
-  
+### Read data in batches
+
 > [!IMPORTANT]  
-> 为了避免数据冲突, `Put()`函数不接受重复的键进行保存. 不管是同一批次中还是不同批次之间的保存, 只要该键在历史中被重复保存则会立刻触发错误: `IsKeyExits`.
-
-
-```go
-package main
-
-import (
-	lmdb "github.com/dingyuqi/lmdb-storage"
-	"log"
-	"strconv"
-)
-
-func main() {
-	var TestDataPath = "D:/test_lmdb"
-	// init a default driver
-	driver, err := lmdb.NewDefaultLmdbDriver(TestDataPath)
-	if err != nil {
-		log.Fatalln(err)
-	} 
-	// prepare key-value data
-	data := make(map[string]string)
-	for i := 0; i < 100; i++ {
-		data[strconv.Itoa(i)] = strconv.Itoa(i)
-	}
-	// write key-value data into database
-	err = driver.Put(data)
-	// if one of key in data has been saved before, it will raise an error
-	if lmdb.IsKeyExits(err) {
-		log.Println("key already exist")
-	}
-}
-```
-### 批量读数据
-> [!IMPORTANT]  
-> 如果查询的某一个key在数据库中搜索不到, 则不会出现在返回结果`result`中
+> If a certain key in the query cannot be searched in the database, it will not appear in the returned result.
 
 ```go
 package main
@@ -108,3 +76,6 @@ func main() {
 	log.Println("result:", result)
 }
 ```
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
