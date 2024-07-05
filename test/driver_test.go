@@ -11,7 +11,10 @@ var TestDataPath = "D:/test_lmdb"
 
 func TestDriver_Put(t *testing.T) {
 	log.Println("开始检测Put========")
-	driver := lmdb.NewDefaultLmdbDriver(TestDataPath)
+	driver, err := lmdb.NewDefaultLmdbDriver(TestDataPath)
+	if err != nil {
+		log.Fatalln(err)
+	}
 	data := make(map[string]string)
 	for i := 0; i < 100; i++ {
 		data[strconv.Itoa(i)] = strconv.Itoa(i)
@@ -19,7 +22,7 @@ func TestDriver_Put(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		data[strconv.Itoa(i)+"_time"] = strconv.Itoa(i)
 	}
-	err := driver.Put(data)
+	err = driver.Put(data)
 	if lmdb.IsKeyExits(err) {
 		log.Println("already exist")
 	}
@@ -29,7 +32,10 @@ func TestDriver_Put(t *testing.T) {
 
 func TestDriver_Get(t *testing.T) {
 	log.Println("开始检测Get========")
-	driver := lmdb.NewDefaultLmdbDriver(TestDataPath)
+	driver, err := lmdb.NewDefaultLmdbDriver(TestDataPath)
+	if err != nil {
+		log.Fatalln(err)
+	}
 	k := map[string]struct{}{"3": {}, "2": {}, "1": {}, "102": {}}
 	log.Println("查询:", k)
 	result, err := driver.Get(k)

@@ -2,6 +2,7 @@ package test
 
 import (
 	"github.com/dingyuqi/lmdb-storage"
+	"log"
 	"os"
 	"strconv"
 	"testing"
@@ -20,7 +21,10 @@ func TestPurePut(t *testing.T) {
 	if err != nil {
 		return
 	}
-	d := lmdb.NewDefaultLmdbDriver(TestDataPath)
+	d, err := lmdb.NewDefaultLmdbDriver(TestDataPath)
+	if err != nil {
+		log.Fatalln(err)
+	}
 	err = d.Put(generateString("孙悟空", 100000))
 	if err != nil {
 		return

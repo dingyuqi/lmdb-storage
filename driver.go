@@ -15,23 +15,23 @@ type Driver struct {
 }
 
 // NewLmdbDriver 返回一个LmdbDriver对象, 使用传入的参数
-func NewLmdbDriver(root string, mapSize, blockSize int64) Driver {
+func NewLmdbDriver(root string, mapSize, blockSize int64) (Driver, error) {
 	err := util.CreateDir(root)
 	if err != nil {
 		log.Println("Create dir error:", err)
-		return Driver{}
+		return Driver{}, err
 	}
-	return Driver{dbRoot: root, mapSize: mapSize, blockSize: blockSize}
+	return Driver{dbRoot: root, mapSize: mapSize, blockSize: blockSize}, nil
 }
 
 // NewDefaultLmdbDriver 返回一个LmdbDriver对象但是使用默认的相关常量
-func NewDefaultLmdbDriver(root string) Driver {
+func NewDefaultLmdbDriver(root string) (Driver, error) {
 	err := util.CreateDir(root)
 	if err != nil {
 		log.Println("Create dir error:", err)
-		return Driver{}
+		return Driver{}, err
 	}
-	return Driver{dbRoot: root, mapSize: defaultMapSize, blockSize: defaultBlockSize}
+	return Driver{dbRoot: root, mapSize: defaultMapSize, blockSize: defaultBlockSize}, nil
 }
 
 // tailDbPath 获取当前最大的分区绝对路径, 如果当前路径下没有任何分区则初始化分区0并返回
