@@ -1,5 +1,7 @@
 # lmdb-storage
 
+**其他语言版本: [English](./README.md)**
+
 lmdb-storage是一个用于保存键值对数据的Go语言库, 它是[lmdb](http://www.lmdb.tech/doc/starting.html)数据库的一个封装.
 该库在[lmdb-go](https://github.com/bmatsuo/lmdb-go)的基础上进一步地增加了批量读写和自动分区的功能, 更适合应对大数据量的数据读写.
 
@@ -36,8 +38,11 @@ import (
 	"strconv"
 )
 
+// TestDataPath lmdb database root path
+// please use your own local path
+var TestDataPath = "D:/test_lmdb"
+
 func main() {
-	var TestDataPath = "D:/test_lmdb"
 	// init a default driver
 	driver, err := lmdb.NewDefaultLmdbDriver(TestDataPath)
 	if err != nil {
@@ -69,9 +74,12 @@ import (
 	"log"
 )
 
+// TestDataPath lmdb database root path
+// please use your own local path
+var TestDataPath = "D:/test_lmdb"
+
 func main() {
-	var TestDataPath = "D:/test_lmdb"
-  // init a default driver
+	// init a default driver
 	driver, err := lmdb.NewDefaultLmdbDriver(TestDataPath)
 	if err != nil {
 		log.Fatalln(err)
@@ -87,4 +95,4 @@ func main() {
 ```
 
 ## 认证
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://choosealicense.com/licenses/mit/) License

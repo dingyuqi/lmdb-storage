@@ -27,11 +27,12 @@ This function only needs to provide the `root` path parameter. The default mapSi
 package main
 
 import (
-	"github.com/dingyuqi/lmdb-storage"
+	lmdb "github.com/dingyuqi/lmdb-storage"
 	"log"
 )
 
 // TestDataPath lmdb database root path
+// please use your own local path
 var TestDataPath = "D:/test_lmdb"
 
 func main() {
@@ -60,9 +61,12 @@ import (
 	"log"
 )
 
+// TestDataPath lmdb database root path
+// please use your own local path
+var TestDataPath = "D:/test_lmdb"
+
 func main() {
-	var TestDataPath = "D:/test_lmdb"
-  // init a default driver
+	// init a default driver
 	driver, err := lmdb.NewDefaultLmdbDriver(TestDataPath)
 	if err != nil {
 		log.Fatalln(err)
@@ -78,4 +82,4 @@ func main() {
 ```
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://choosealicense.com/licenses/mit/) License
